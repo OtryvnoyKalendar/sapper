@@ -2,6 +2,7 @@
 *.d
 
 build/
+build.log
 cmakebin/
 
 # Object files

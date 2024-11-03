@@ -7,7 +7,9 @@ source_find_format="cpp"
 header_find_format="hpp"
 find_directory="./src/"
 compiler="clang++"
-dynamic_lib="-lm -lGL -lGLU -lSDL2"
+#compiler="x86_64-w64-mingw32-g++"
+#lib_manes="-Wl,-Bdynamic -lGL -Wl,-Bstatic -lGLU -lSDL2"
+lib_names="-lm -lGL -lGLU -lSDL2"
 warnings="-Wall -Wextra -Wpedantic"
 standard="-std=c++17"
 log_file="build.log"
@@ -25,6 +27,7 @@ debug_mode=""
 run_mode=""
 file_exists=false
 deleted_files="неизвестно"
+compiler_command_log=""
 
 found_sources=`find $find_directory -type f -name "*.$source_find_format" -printf "%p "`
 found_headers=`find $find_directory -type f -name "*.$header_find_format" -printf "%p "` # не используется
@@ -107,7 +110,8 @@ check_and_compile() {
 	print_dashes
 
 	print_message $GREEN "Сообщения компилятора $compiler:"
-	$compiler $found_sources -o $program_name $warnings $dynamic_lib $include_dirs $standard $debug_mode
+	compiler_command_log="$compiler $found_sources -o $program_name $warnings $include_dirs $standard $debug_mode $lib_names"
+	eval "$compiler_command_log"
 	print_dashes
 }
 
@@ -142,6 +146,8 @@ if [ "$run_mode" == "log_only" ]
 then
 	{
 		check_and_compile
+		print_message $GREEN "Команда компилятору:"
+		print_message $BLUE "$compiler_command_log"
 	} &> "$log_file"
 	print_message $GREEN "Лог компиляции сохранен в $log_file"
 else
