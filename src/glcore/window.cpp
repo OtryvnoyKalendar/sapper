@@ -30,7 +30,7 @@ bool init() {
 			success = false;
 		}
 		else {
-			// созадать контекст
+			// создать контекст
 			gContext = SDL_GL_CreateContext( gWindow );
 			if( gContext == NULL ) {
 				printf( "OpenGL context could not be created! SDL Error: %s\n", SDL_GetError() );

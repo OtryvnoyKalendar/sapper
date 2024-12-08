@@ -4,6 +4,7 @@
 
 #include "game.hpp"
 #include "map.hpp"
+#include "main.hpp"
 
 void NewGame() {
 	srand(time(NULL));
@@ -27,6 +28,14 @@ void NewGame() {
 					if(IsCellInMap(x+dx, y+dy))
 						map[x+dx][y+dy].mineAroundNum += 1;
 		}
+	}
+	
+	while(closedCellNum == MAP_WIDTH*MAP_HEIGHT) {
+		int x = rand() % MAP_WIDTH;
+		int y = rand() % MAP_HEIGHT;
+
+		if(!map[x][y].mine && map[x][y].mineAroundNum == 0)
+			OpenFields(x, y);
 	}
 }
 
