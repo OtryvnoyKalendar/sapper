@@ -226,7 +226,7 @@ then
 			if exec_is_exists
 			then
 				run_program
-				rm $program_name
+				#rm $program_name
 			else
 				print_message $RED "Исполняемый файл не найден"
 			fi
